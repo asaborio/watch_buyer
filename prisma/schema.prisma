@@ -1,0 +1,55 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Watch {
+  id                          String   @id @default(cuid())
+  brand                       String
+  reference                   String
+  msrpCents                   Int        // store money in cents (e.g., $12,345.67 => 1234567)
+  description                 String?
+  brandDiscountBasisPoints    Int        // e.g., 1500 = 15.00%
+
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+
+  priceSnapshots              PriceSnapshot[]
+}
+
+model PriceSnapshot {
+  id                           String      @id @default(cuid())
+  watchId                      String
+  source                       Marketplace
+  query                        String
+
+  lowestCents                  Int
+  currency                     String      // "USD"
+  url                          String?
+  hasBox                       Boolean
+  hasPapers                    Boolean
+  location                     String      // e.g., "US"
+
+  capturedAt                   DateTime    @default(now())
+
+  // Derived decision fields (denormalized for quick reads)
+  suggestedBuyMinus2000Cents   Int
+  suggestedBuyMinus20PctCents  Int
+  brandTargetCents             Int
+
+  watch                        Watch       @relation(fields: [watchId], references: [id])
+
+  @@index([watchId])
+  @@index([source, capturedAt])
+}
+
+enum Marketplace {
+  EBAY
+  CHRONO24
+}
