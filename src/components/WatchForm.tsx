@@ -1,11 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export interface WatchFormValues {
   brand: string;
   reference: string;
   msrp: string;
   brandDiscountPct: string;
+  description: string;
+  chrono24Url?: string;
+  chrono24Html?: string;
 }
 
 interface WatchFormProps {
@@ -13,82 +16,137 @@ interface WatchFormProps {
 }
 
 export default function WatchForm({ onEvaluate }: WatchFormProps) {
-  const [brand, setBrand] = useState("");
-  const [reference, setReference] = useState("");
-  const [msrp, setMsrp] = useState("");
-  const [brandDiscountPct, setBrandDiscountPct] = useState("");
+  const [values, setValues] = useState<WatchFormValues>({
+    brand: "",
+    reference: "",
+    msrp: "",
+    brandDiscountPct: "",
+    description: "",
+    chrono24Url: "",
+    chrono24Html: "",
+  });
+
+  function update<K extends keyof WatchFormValues>(key: K, val: WatchFormValues[K]) {
+    setValues(prev => ({ ...prev, [key]: val }));
+  }
+
+  const disableButton = useMemo(() => {
+    return (
+      !values.brand ||
+      !values.reference ||
+      !values.msrp ||
+      !values.brandDiscountPct
+    );
+  }, [values]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onEvaluate({ brand, reference, msrp, brandDiscountPct });
+    onEvaluate(values);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4">
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          Brand
-          <input
-            type="text"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-            placeholder="e.g., Tudor"
-            required
-          />
-        </label>
+    <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4 bg-white shadow-sm">
+      {/* Brand */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Brand</label>
+        <input
+          type="text"
+          className="border rounded p-2 w-full"
+          placeholder="Tudor, AP, Rolex..."
+          value={values.brand}
+          onChange={e=>update("brand", e.target.value)}
+          required
+        />
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          Reference Number
-          <input
-            type="text"
-            value={reference}
-            onChange={(e) => setReference(e.target.value)}
-            className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-            placeholder="e.g., M7941A1A0NU-0001"
-            required
-          />
-        </label>
+      {/* Reference */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Reference #</label>
+        <input
+          type="text"
+          className="border rounded p-2 w-full"
+          placeholder="M7941A1A0NU-0001"
+          value={values.reference}
+          onChange={e=>update("reference", e.target.value)}
+          required
+        />
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          MSRP (USD)
-          <input
-            type="number"
-            step="0.01"
-            value={msrp}
-            onChange={(e) => setMsrp(e.target.value)}
-            className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-            placeholder="e.g., 4550.00"
-            required
-          />
-        </label>
+      {/* MSRP */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">MSRP (USD)</label>
+        <input
+          type="number"
+          step="0.01"
+          className="border rounded p-2 w-full"
+          placeholder="4550.00"
+          value={values.msrp}
+          onChange={e=>update("msrp", e.target.value)}
+          required
+        />
       </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          Brand Discount (%)
-          <input
-            type="number"
-            step="0.01"
-            value={brandDiscountPct}
-            onChange={(e) => setBrandDiscountPct(e.target.value)}
-            className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-            placeholder="e.g., 15.00"
-            required
-          />
-        </label>
+      {/* Brand Discount */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Brand Discount (%)</label>
+        <input
+          type="number"
+          step="0.01"
+          className="border rounded p-2 w-full"
+          placeholder="15.00"
+          value={values.brandDiscountPct}
+          onChange={e=>update("brandDiscountPct", e.target.value)}
+          required
+        />
         <p className="text-xs text-gray-500">
-          Typical brand discount percentage off MSRP
+          Typical alternative marketplace discount % off MSRP
         </p>
+      </div>
+
+      {/* Description */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Description</label>
+        <textarea
+          className="border rounded p-2 w-full min-h-[80px]"
+          placeholder="Dial, case material, bracelet, condition..."
+          value={values.description}
+          onChange={e=>update("description", e.target.value)}
+        />
+      </div>
+
+      {/* Chrono24 URL */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Chrono24 Search URL (optional)</label>
+        <input
+          className="border rounded p-2 w-full"
+          placeholder="Paste Chrono24 search URL"
+          value={values.chrono24Url}
+          onChange={e=>update("chrono24Url", e.target.value)}
+        />
+        <p className="text-xs text-gray-500">
+          If blocked, paste the HTML below instead.
+        </p>
+      </div>
+
+      {/* Chrono24 HTML */}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">
+          Chrono24 Results HTML (fallback)
+        </label>
+        <textarea
+          className="border rounded p-2 w-full min-h-[120px]"
+          placeholder="Paste page source HTML here if fetch is blocked"
+          value={values.chrono24Html}
+          onChange={e=>update("chrono24Html", e.target.value)}
+        />
       </div>
 
       <button
         type="submit"
-        className="w-full rounded bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700 transition-colors"
+        disabled={disableButton}
+        className={`w-full rounded px-4 py-2 text-white font-medium transition-colors ${
+          disableButton ? "bg-gray-400 cursor-not-allowed" : "bg-black hover:bg-gray-800"
+        }`}
       >
         Evaluate
       </button>
