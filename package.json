@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^6.18.0",
     "@supabase/supabase-js": "^2.76.1",
+    "cheerio": "^1.1.2",
     "next": "16.0.0",
     "prisma": "^6.18.0",
     "react": "19.2.0",

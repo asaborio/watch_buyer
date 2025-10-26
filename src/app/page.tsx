@@ -24,13 +24,24 @@ export default function Page() {
       });
       const ebay = await ebayRes.json();
 
-      const decision = await fetch("/api/decision", {
+      const chrono24Res = await fetch("/api/price/chrono24", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ msrpCents, brandDiscountBps, ebay }),
+        body: JSON.stringify({
+          chrono24Url: v.chrono24Url?.trim() || undefined,
+          htmlFallback: v.chrono24Html?.trim() || undefined,
+        }),
+      });
+      const chrono24 = await chrono24Res.json();
+
+      // ✅ Single decision call including both marketplaces
+      const decisionRes = await fetch("/api/decision", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ msrpCents, brandDiscountBps, ebay, chrono24 }),
       });
 
-      const data = await decision.json();
+      const data = await decisionRes.json();
       setResult({ data, inputs: v });
     } catch (e) {
       console.error(e);
