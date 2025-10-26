@@ -69,11 +69,7 @@ export default function Page() {
                   <span className="inline-block w-24">{m.source}:</span>{" "}
                   {fmtUSD(m.lowestCents)}
                   {m.url && (
-                    <a
-                      className="underline ml-2"
-                      href={m.url}
-                      target="_blank"
-                    >
+                    <a className="underline ml-2" href={m.url} target="_blank">
                       view
                     </a>
                   )}
