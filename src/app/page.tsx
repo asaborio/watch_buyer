@@ -1,5 +1,14 @@
 import Image from "next/image";
 
+export default function Page() {
+  return (
+    <main className="p-6">
+      <h1 className="text-3xl font-bold text-red-500">Tailwind Test</h1>
+      <p className="mt-2 text-gray-600">If this is red, Tailwind is live.</p>
+    </main>
+  );
+}
+
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
