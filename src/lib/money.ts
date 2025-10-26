@@ -22,4 +22,3 @@ export function fmtUSD(cents: number): string {
     currency: "USD",
   }).format(centsToDollars(cents));
 }
-
