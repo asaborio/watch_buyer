@@ -43,7 +43,7 @@ export function parseChrono24Listings(
   const $ = cheerio.load(html);
 
   // Candidate selectors (Chrono24 markup can change; we keep a wide net)
-  const candidates = new Set<cheerio.Cheerio<cheerio.Element>>();
+  const candidates = new Set<cheerio.Cheerio<any>>();
 
   // 1) Obvious listing containers
   $(
