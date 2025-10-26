@@ -26,8 +26,11 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
     chrono24Html: "",
   });
 
-  function update<K extends keyof WatchFormValues>(key: K, val: WatchFormValues[K]) {
-    setValues(prev => ({ ...prev, [key]: val }));
+  function update<K extends keyof WatchFormValues>(
+    key: K,
+    val: WatchFormValues[K]
+  ) {
+    setValues((prev) => ({ ...prev, [key]: val }));
   }
 
   const disableButton = useMemo(() => {
@@ -45,7 +48,10 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border rounded p-4 bg-white shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 border rounded p-4 bg-white shadow-sm"
+    >
       {/* Brand */}
       <div className="space-y-1">
         <label className="text-sm font-medium">Brand</label>
@@ -54,7 +60,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full"
           placeholder="Tudor, AP, Rolex..."
           value={values.brand}
-          onChange={e=>update("brand", e.target.value)}
+          onChange={(e) => update("brand", e.target.value)}
           required
         />
       </div>
@@ -67,7 +73,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full"
           placeholder="M7941A1A0NU-0001"
           value={values.reference}
-          onChange={e=>update("reference", e.target.value)}
+          onChange={(e) => update("reference", e.target.value)}
           required
         />
       </div>
@@ -81,7 +87,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full"
           placeholder="4550.00"
           value={values.msrp}
-          onChange={e=>update("msrp", e.target.value)}
+          onChange={(e) => update("msrp", e.target.value)}
           required
         />
       </div>
@@ -95,7 +101,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full"
           placeholder="15.00"
           value={values.brandDiscountPct}
-          onChange={e=>update("brandDiscountPct", e.target.value)}
+          onChange={(e) => update("brandDiscountPct", e.target.value)}
           required
         />
         <p className="text-xs text-gray-500">
@@ -110,18 +116,20 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full min-h-[80px]"
           placeholder="Dial, case material, bracelet, condition..."
           value={values.description}
-          onChange={e=>update("description", e.target.value)}
+          onChange={(e) => update("description", e.target.value)}
         />
       </div>
 
       {/* Chrono24 URL */}
       <div className="space-y-1">
-        <label className="text-sm font-medium">Chrono24 Search URL (optional)</label>
+        <label className="text-sm font-medium">
+          Chrono24 Search URL (optional)
+        </label>
         <input
           className="border rounded p-2 w-full"
           placeholder="Paste Chrono24 search URL"
           value={values.chrono24Url}
-          onChange={e=>update("chrono24Url", e.target.value)}
+          onChange={(e) => update("chrono24Url", e.target.value)}
         />
         <p className="text-xs text-gray-500">
           If blocked, paste the HTML below instead.
@@ -137,7 +145,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           className="border rounded p-2 w-full min-h-[120px]"
           placeholder="Paste page source HTML here if fetch is blocked"
           value={values.chrono24Html}
-          onChange={e=>update("chrono24Html", e.target.value)}
+          onChange={(e) => update("chrono24Html", e.target.value)}
         />
       </div>
 
@@ -145,7 +153,9 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
         type="submit"
         disabled={disableButton}
         className={`w-full rounded px-4 py-2 text-white font-medium transition-colors ${
-          disableButton ? "bg-gray-400 cursor-not-allowed" : "bg-black hover:bg-gray-800"
+          disableButton
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-black hover:bg-gray-800"
         }`}
       >
         Evaluate
