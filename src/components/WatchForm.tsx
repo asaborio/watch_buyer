@@ -57,7 +57,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
         <label className="text-sm font-medium text-gray-700">Brand</label>
         <input
           type="text"
-          className="border border-gray-300 rounded p-2 w-full bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="Tudor, AP, Rolex..."
           value={values.brand}
           onChange={(e) => update("brand", e.target.value)}
@@ -70,7 +70,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
         <label className="text-sm font-medium text-gray-700">Reference #</label>
         <input
           type="text"
-          className="border border-gray-300 rounded p-2 w-full bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="M7941A1A0NU-0001"
           value={values.reference}
           onChange={(e) => update("reference", e.target.value)}
@@ -84,7 +84,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
         <input
           type="number"
           step="0.01"
-          className="border border-gray-300 rounded p-2 w-full bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="4550.00"
           value={values.msrp}
           onChange={(e) => update("msrp", e.target.value)}
@@ -94,11 +94,13 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
 
       {/* Brand Discount */}
       <div className="space-y-1">
-        <label className="text-sm font-medium text-gray-700">Brand Discount (%)</label>
+        <label className="text-sm font-medium text-gray-700">
+          Brand Discount (%)
+        </label>
         <input
           type="number"
           step="0.01"
-          className="border border-gray-300 rounded p-2 w-full bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="15.00"
           value={values.brandDiscountPct}
           onChange={(e) => update("brandDiscountPct", e.target.value)}
@@ -113,7 +115,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
       <div className="space-y-1">
         <label className="text-sm font-medium text-gray-700">Description</label>
         <textarea
-          className="border border-gray-300 rounded p-2 w-full min-h-[80px] bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full min-h-[80px] bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="Dial, case material, bracelet, condition..."
           value={values.description}
           onChange={(e) => update("description", e.target.value)}
@@ -126,7 +128,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           Chrono24 Search URL (optional)
         </label>
         <input
-          className="border border-gray-300 rounded p-2 w-full bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="Paste Chrono24 search URL"
           value={values.chrono24Url}
           onChange={(e) => update("chrono24Url", e.target.value)}
@@ -142,7 +144,7 @@ export default function WatchForm({ onEvaluate }: WatchFormProps) {
           Chrono24 Results HTML (fallback)
         </label>
         <textarea
-          className="border border-gray-300 rounded p-2 w-full min-h-[120px] bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+          className="border border-gray-300 rounded p-2 w-full min-h-[120px] bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           placeholder="Paste page source HTML here if fetch is blocked"
           value={values.chrono24Html}
           onChange={(e) => update("chrono24Html", e.target.value)}
